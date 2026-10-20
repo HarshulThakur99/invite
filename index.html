@@ -248,6 +248,17 @@ body:before{
 .map-button:active{transform:scale(.98)}
 @media(max-width:650px){.date-card{margin-top:22px}.venue-card{margin-left:6px;margin-right:6px}.map-button{font-size:8px;padding:11px 16px}}
 
+.countdown-card{position:relative;isolation:isolate;overflow:hidden;margin:26px auto 10px;padding:30px 18px 34px;max-width:620px;border:1px solid rgba(176,109,123,.30);border-radius:18px;box-shadow:0 18px 42px rgba(101,57,66,.14);text-align:center}
+.countdown-card:before{content:"";position:absolute;inset:-6px;background-image:url("https://images.unsplash.com/photo-1782038522629-63ff1ab76251?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=1200");background-size:cover;background-position:center;filter:blur(4px);transform:scale(1.04);z-index:0}
+.countdown-card:after{content:"";position:absolute;inset:0;background:rgba(233,196,197,.4);z-index:1}
+.countdown-label{position:relative;z-index:2;font-family:Montserrat;font-size:12px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--text-main);text-shadow:0 1px 3px rgba(255,250,248,.85);margin-bottom:20px}
+.countdown-grid{position:relative;z-index:2;display:flex;justify-content:center;align-items:flex-start;gap:clamp(8px,4vw,24px)}
+.countdown-unit{display:flex;flex-direction:column;align-items:center;min-width:52px}
+.countdown-num{font-family:"DM Serif Display",serif;font-size:clamp(30px,8vw,46px);line-height:1;color:var(--name-accent);text-shadow:0 1px 3px rgba(255,250,248,.7)}
+.countdown-unit-label{font-family:Montserrat;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-main);opacity:.82;margin-top:7px}
+.countdown-sep{position:relative;z-index:2;font-family:"DM Serif Display",serif;font-size:clamp(24px,6vw,36px);color:var(--text-main);opacity:.5;line-height:1;margin-top:2px}
+@media(max-width:650px){.countdown-card{margin-left:6px;margin-right:6px;padding:26px 10px 28px}}
+
 
 .reveal{opacity:0;transform:translateY(35px);transition:opacity .9s ease,transform .9s ease}
 .reveal.visible{opacity:1;transform:none}
@@ -366,6 +377,19 @@ body:before{
             <div class="venue-name">Vani Hotel Golden Petals</div>
             <a class="map-button" href="https://www.google.com/maps/search/?api=1&amp;query=Vani%20Hotel%20Golden%20Petals%2C%20Old%20Hoshiarpur%20Rd%2C%20adjacent%20to%20Raizada%20Petrol%20Pump%2C%20Lal%20Singhi%2C%20Una%2C%20Himachal%20Pradesh%20174303" target="_blank" rel="noopener">VIEW VENUE ON GOOGLE MAPS</a>
           </div>
+
+          <div class="countdown-card reveal">
+            <div class="countdown-label">Counting Down To Forever</div>
+            <div class="countdown-grid">
+              <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-unit-label">Days</span></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-unit"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-unit-label">Hours</span></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-unit"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-unit-label">Minutes</span></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-unit"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-unit-label">Seconds</span></div>
+            </div>
+          </div>
         </section>
 
         <div class="family reveal">
@@ -482,6 +506,27 @@ body:before{
   }, {threshold:.16});
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+</script>
+<script>
+(() => {
+  // Ceremony starts 12:00 PM IST on Nov 15, 2026; the fixed offset keeps the countdown correct for guests in any timezone.
+  const countdownTarget = new Date('2026-11-15T12:00:00+05:30').getTime();
+  const pad = n => String(n).padStart(2, '0');
+  const days = document.getElementById('cd-days');
+  const hours = document.getElementById('cd-hours');
+  const mins = document.getElementById('cd-mins');
+  const secs = document.getElementById('cd-secs');
+
+  function tick() {
+    const diff = Math.max(0, countdownTarget - Date.now());
+    days.textContent = pad(Math.floor(diff / 86400000));
+    hours.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    mins.textContent = pad(Math.floor((diff % 3600000) / 60000));
+    secs.textContent = pad(Math.floor((diff % 60000) / 1000));
+  }
+  tick();
+  setInterval(tick, 1000);
 })();
 </script>
 </body>
