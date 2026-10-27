@@ -796,8 +796,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgMusic = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
   let musicMuted = false;
+  let musicFadeTimer = null;
+  const MUSIC_TARGET_VOLUME = 0.25;
   
   let isTransitioning = false;
+
+  function fadeInMusic() {
+    clearInterval(musicFadeTimer);
+    bgMusic.volume = 0;
+    bgMusic.play().catch(() => {});
+    const steps = 25;
+    let step = 0;
+    musicFadeTimer = setInterval(() => {
+      step++;
+      bgMusic.volume = Math.min(MUSIC_TARGET_VOLUME, (MUSIC_TARGET_VOLUME * step) / steps);
+      if (step >= steps) clearInterval(musicFadeTimer);
+    }, 120);
+  }
 
   function openEnvelope() {
     if (isTransitioning) return;
@@ -805,8 +820,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     envelopeWrap.classList.add('envelope-opening');
     // Started on the same tap gesture so mobile browsers allow autoplay.
-    bgMusic.volume = 0.5;
-    bgMusic.play().catch(() => {});
+    fadeInMusic();
 
     setTimeout(() => {
       landing.classList.add('landing-hidden');
@@ -831,6 +845,7 @@ document.addEventListener("DOMContentLoaded", () => {
     invitation.classList.remove('open');
     closeBtn.classList.remove('visible');
     musicToggle.classList.remove('visible');
+    clearInterval(musicFadeTimer);
     bgMusic.pause();
     bgMusic.currentTime = 0;
     
