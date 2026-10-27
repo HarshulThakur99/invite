@@ -539,6 +539,8 @@ body::before {
   transform: scale(1.05);
 }
 .music-btn:active { transform: scale(0.95); }
+@keyframes musicPulse { 0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.1); } 50% { box-shadow: 0 4px 16px rgba(176,138,67,0.55); } }
+.music-btn.playing { animation: musicPulse 1.8s ease-in-out infinite; }
 </style>
 </head>
 <body class="antialiased selection:bg-gold-light selection:text-burgundy-900">
@@ -793,7 +795,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById('closeInvitation');
   const bgMusic = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
-  let musicMuted = false;
+  let musicMuted = localStorage.getItem('inviteMusicMuted') === 'true';
   let musicFadeTimer = null;
   const MUSIC_TARGET_VOLUME = 0.25;
   
@@ -801,6 +803,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function fadeInMusic() {
     clearInterval(musicFadeTimer);
+    bgMusic.muted = musicMuted;
+    musicToggle.textContent = musicMuted ? '🔇' : '🔊';
+    musicToggle.classList.toggle('playing', !musicMuted);
     bgMusic.volume = 0;
     bgMusic.play().catch(() => {});
     const steps = 25;
@@ -810,6 +815,21 @@ document.addEventListener("DOMContentLoaded", () => {
       bgMusic.volume = Math.min(MUSIC_TARGET_VOLUME, (MUSIC_TARGET_VOLUME * step) / steps);
       if (step >= steps) clearInterval(musicFadeTimer);
     }, 120);
+  }
+
+  function fadeOutMusic(onDone) {
+    clearInterval(musicFadeTimer);
+    const startVolume = bgMusic.volume;
+    const steps = 10;
+    let step = 0;
+    musicFadeTimer = setInterval(() => {
+      step++;
+      bgMusic.volume = Math.max(0, startVolume * (1 - step / steps));
+      if (step >= steps) {
+        clearInterval(musicFadeTimer);
+        onDone();
+      }
+    }, 40);
   }
 
   function openEnvelope() {
@@ -842,10 +862,11 @@ document.addEventListener("DOMContentLoaded", () => {
     
     invitation.classList.remove('open');
     closeBtn.classList.remove('visible');
-    musicToggle.classList.remove('visible');
-    clearInterval(musicFadeTimer);
-    bgMusic.pause();
-    bgMusic.currentTime = 0;
+    musicToggle.classList.remove('visible', 'playing');
+    fadeOutMusic(() => {
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
+    });
     
     setTimeout(() => {
       invitation.style.display = 'none';
@@ -861,8 +882,19 @@ document.addEventListener("DOMContentLoaded", () => {
     musicMuted = !musicMuted;
     bgMusic.muted = musicMuted;
     musicToggle.textContent = musicMuted ? '🔇' : '🔊';
+    musicToggle.classList.toggle('playing', !musicMuted);
+    localStorage.setItem('inviteMusicMuted', musicMuted);
   });
   closeBtn.addEventListener('click', closeToEnvelope);
+
+  document.addEventListener('visibilitychange', () => {
+    if (!invitation.classList.contains('open')) return;
+    if (document.hidden) {
+      bgMusic.pause();
+    } else if (!musicMuted) {
+      bgMusic.play().catch(() => {});
+    }
+  });
 
   const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
   const scrollObserver = new IntersectionObserver((entries) => {
