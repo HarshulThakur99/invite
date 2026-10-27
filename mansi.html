@@ -883,6 +883,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
     invitation.classList.remove('open');
     closeBtn.classList.remove('visible');
+    musicToggle.classList.remove('visible');
+    bgMusic.pause();
+    bgMusic.currentTime = 0;
     
     setTimeout(() => {
       invitation.style.display = 'none';
