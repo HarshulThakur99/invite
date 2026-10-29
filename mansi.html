@@ -542,16 +542,26 @@ body::before {
 @keyframes musicPulse { 0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.1); } 50% { box-shadow: 0 4px 16px rgba(176,138,67,0.55); } }
 .music-btn.playing { animation: musicPulse 1.8s ease-in-out infinite; }
 
-/* Blurred looping animation behind the envelope, framed as a band above it */
+/* Small capsule frame showing the full-length looping animation above the envelope */
+.landing-video-frame {
+  position: relative;
+  z-index: 2;
+  width: clamp(140px, 36vw, 180px);
+  aspect-ratio: 480 / 854;
+  margin: 0 auto 24px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 3px solid rgba(212, 175, 55, 0.6);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.15);
+  background: #1F0A12;
+}
 .landing-bg-video {
-  position: absolute; top: 0; left: 0; z-index: 0;
-  width: 100%; height: 46vh;
+  width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center 22%;
-  filter: blur(2px);
+  display: block;
 }
 @media (prefers-reduced-motion: reduce) {
-  .landing-bg-video { display: none; }
+  .landing-video-frame { display: none; }
 }
 </style>
 </head>
@@ -559,8 +569,6 @@ body::before {
 
 <!-- LANDING ENVELOPE -->
 <section id="landing">
-  <!-- Blurred looping background animation -->
-  <video class="landing-bg-video" id="landingBgVideo" src="envelope-bg.mp4" autoplay muted loop playsinline preload="auto"></video>
   <!-- Decorative Background Elements -->
   <div class="bg-floral floral-tl">❁</div>
   <div class="bg-floral floral-br">✾</div>
@@ -568,11 +576,16 @@ body::before {
 
   <div class="envelope-stage">
     
-    <div class="text-center mb-8 reveal visible">
-      <p class="font-sans text-[10px] sm:text-xs tracking-[0.3em] text-gold-light uppercase opacity-80">
+    <div class="text-center mb-6 reveal visible">
+      <p class="font-sans text-[10px] sm:text-xs tracking-[0.3em] text-gold-light uppercase drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
         You are warmly invited to
       </p>
       <div class="mt-4 text-gold-light text-xl">✦</div>
+    </div>
+
+    <!-- Full-length looping animation, framed as a small capsule above the envelope -->
+    <div class="landing-video-frame">
+      <video class="landing-bg-video" id="landingBgVideo" src="envelope-bg.mp4" autoplay muted loop playsinline preload="auto"></video>
     </div>
 
     <div class="envelope-wrap" id="envelopeWrap">
