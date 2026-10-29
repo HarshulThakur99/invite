@@ -541,12 +541,31 @@ body::before {
 .music-btn:active { transform: scale(0.95); }
 @keyframes musicPulse { 0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.1); } 50% { box-shadow: 0 4px 16px rgba(176,138,67,0.55); } }
 .music-btn.playing { animation: musicPulse 1.8s ease-in-out infinite; }
+
+/* Blurred looping animation behind the envelope */
+.landing-bg-video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  filter: blur(8px);
+  transform: scale(1.08);
+}
+.landing-bg-overlay {
+  position: absolute; inset: 0; z-index: 0;
+  background: rgba(42,8,18,0.55);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing-bg-video { display: none; }
+}
 </style>
 </head>
 <body class="antialiased selection:bg-gold-light selection:text-burgundy-900">
 
 <!-- LANDING ENVELOPE -->
 <section id="landing">
+  <!-- Blurred looping background animation -->
+  <video class="landing-bg-video" id="landingBgVideo" src="envelope-bg.mp4" autoplay muted loop playsinline preload="auto"></video>
+  <div class="landing-bg-overlay"></div>
   <!-- Decorative Background Elements -->
   <div class="bg-floral floral-tl">❁</div>
   <div class="bg-floral floral-br">✾</div>
@@ -897,6 +916,16 @@ document.addEventListener("DOMContentLoaded", () => {
       bgMusic.play().catch(() => {});
     }
   });
+
+  const landingVideo = document.getElementById('landingBgVideo');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (landingVideo && !reducedMotion) {
+    landingVideo.play().catch(() => {});
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) landingVideo.pause();
+      else landingVideo.play().catch(() => {});
+    });
+  }
 
   const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
   const scrollObserver = new IntersectionObserver((entries) => {
