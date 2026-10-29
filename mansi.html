@@ -176,7 +176,7 @@ body::before {
   z-index: 10;
   width: 100%;
   max-width: 600px;
-  padding: 20px;
+  padding: 20px 20px 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -188,7 +188,7 @@ body::before {
   max-width: 500px;
   aspect-ratio: 1.58;
   perspective: 1600px;
-  margin-top: 20px;
+  margin-top: 8px;
 }
 
 /* Dynamic Shadow */
@@ -344,8 +344,8 @@ body::before {
 
 /* Floating Hint */
 .seal-hint {
-  position: absolute; top: 90px;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  position: absolute; top: 80px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
   pointer-events: none;
   animation: pulseHint 2s ease-in-out infinite;
 }
@@ -546,9 +546,9 @@ body::before {
 /* No explicit z-index: must paint below the envelope-wrap (later in DOM) so the rising letter card never goes behind it */
 .landing-video-frame {
   position: relative;
-  width: clamp(190px, 50vw, 260px);
+  width: clamp(220px, 60vw, 300px);
   aspect-ratio: 480 / 854;
-  margin: 0 auto 24px;
+  margin: 0 auto 14px;
   border-radius: 999px;
   overflow: hidden;
   border: 3px solid rgba(212, 175, 55, 0.6);
@@ -576,11 +576,11 @@ body::before {
 
   <div class="envelope-stage">
     
-    <div class="text-center mb-6 reveal visible">
+    <div class="text-center mb-3 reveal visible">
       <p class="font-sans text-[10px] sm:text-xs tracking-[0.3em] text-gold-light uppercase drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
         You are warmly invited to
       </p>
-      <div class="mt-4 text-gold-light text-xl">✦</div>
+      <div class="mt-2 text-gold-light text-xl">✦</div>
     </div>
 
     <!-- Full-length looping animation, framed as a small capsule above the envelope -->
