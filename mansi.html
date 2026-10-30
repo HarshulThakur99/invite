@@ -542,14 +542,14 @@ body::before {
 @keyframes musicPulse { 0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.1); } 50% { box-shadow: 0 4px 16px rgba(176,138,67,0.55); } }
 .music-btn.playing { animation: musicPulse 1.8s ease-in-out infinite; }
 
-/* Small capsule frame showing the full-length looping animation above the envelope */
+/* Small arched frame showing the full-length looping animation above the envelope */
 /* No explicit z-index: must paint below the envelope-wrap (later in DOM) so the rising letter card never goes behind it */
 .landing-video-frame {
   position: relative;
   width: clamp(165px, 42vw, 215px);
   aspect-ratio: 480 / 854;
   margin: 0 auto 10px;
-  border-radius: 999px;
+  border-radius: 50% 50% 0 0 / 100px 100px 0 0;
   overflow: hidden;
   border: 3px solid rgba(212, 175, 55, 0.6);
   box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.15);
