@@ -542,7 +542,7 @@ body::before {
 @keyframes musicPulse { 0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.1); } 50% { box-shadow: 0 4px 16px rgba(176,138,67,0.55); } }
 .music-btn.playing { animation: musicPulse 1.8s ease-in-out infinite; }
 
-/* Mandir-shaped (stepped temple tower) frame showing the full-length looping animation above the envelope */
+/* Mughal onion-dome frame showing the full-length looping animation above the envelope */
 /* No explicit z-index: must paint below the envelope-wrap (later in DOM) so the rising letter card never goes behind it */
 .landing-video-frame {
   position: relative;
@@ -550,8 +550,8 @@ body::before {
   aspect-ratio: 480 / 854;
   margin: 0 auto 10px;
   background: #1F0A12;
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpolygon points='0,100 0,46 10,46 10,34 22,34 22,24 34,24 34,14 44,14 44,6 50,0 56,6 56,14 66,14 66,24 78,24 78,34 90,34 90,46 100,46 100,100' fill='white'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpolygon points='0,100 0,46 10,46 10,34 22,34 22,24 34,24 34,14 44,14 44,6 50,0 56,6 56,14 66,14 66,24 78,24 78,34 90,34 90,46 100,46 100,100' fill='white'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M18 100 L18 86 C18 64 0 64 0 50 C0 28 22 10 38 4 C44 1 47 0 50 0 C53 0 56 1 62 4 C78 10 100 28 100 50 C100 64 82 64 82 86 L82 100 Z' fill='white'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M18 100 L18 86 C18 64 0 64 0 50 C0 28 22 10 38 4 C44 1 47 0 50 0 C53 0 56 1 62 4 C78 10 100 28 100 50 C100 64 82 64 82 86 L82 100 Z' fill='white'/%3E%3C/svg%3E");
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -594,11 +594,11 @@ body::before {
       <div class="mt-1 text-gold-light text-xl">✦</div>
     </div>
 
-    <!-- Full-length looping animation, framed as a mandir-shaped silhouette above the envelope -->
+    <!-- Full-length looping animation, framed as a Mughal onion-dome silhouette above the envelope -->
     <div class="landing-video-frame">
       <video class="landing-bg-video" id="landingBgVideo" src="envelope-bg.mp4" autoplay muted loop playsinline preload="auto"></video>
       <svg class="landing-video-outline" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <polygon points="0,100 0,46 10,46 10,34 22,34 22,24 34,24 34,14 44,14 44,6 50,0 56,6 56,14 66,14 66,24 78,24 78,34 90,34 90,46 100,46 100,100" fill="none" stroke="#D4AF37" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+        <path d="M18 100 L18 86 C18 64 0 64 0 50 C0 28 22 10 38 4 C44 1 47 0 50 0 C53 0 56 1 62 4 C78 10 100 28 100 50 C100 64 82 64 82 86 L82 100 Z" fill="none" stroke="#D4AF37" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
       </svg>
     </div>
 
