@@ -542,31 +542,23 @@ body::before {
 @keyframes musicPulse { 0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.1); } 50% { box-shadow: 0 4px 16px rgba(176,138,67,0.55); } }
 .music-btn.playing { animation: musicPulse 1.8s ease-in-out infinite; }
 
-/* Mughal onion-dome frame showing the full-length looping animation above the envelope */
+/* Small arched frame showing the full-length looping animation above the envelope */
 /* No explicit z-index: must paint below the envelope-wrap (later in DOM) so the rising letter card never goes behind it */
 .landing-video-frame {
   position: relative;
   width: clamp(165px, 42vw, 215px);
   aspect-ratio: 480 / 854;
   margin: 0 auto 10px;
+  border-radius: 50% 50% 0 0 / 100px 100px 0 0;
+  overflow: hidden;
+  border: 3px solid rgba(212, 175, 55, 0.6);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.15);
   background: #1F0A12;
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M20 55 C0 55 0 45 0 32 C0 12 30 0 50 0 C70 0 100 12 100 32 C100 45 100 55 80 55 L80 100 L20 100 Z' fill='white'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M20 55 C0 55 0 45 0 32 C0 12 30 0 50 0 C70 0 100 12 100 32 C100 45 100 55 80 55 L80 100 L20 100 Z' fill='white'/%3E%3C/svg%3E");
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  filter: drop-shadow(0 10px 22px rgba(0,0,0,0.45));
 }
 .landing-bg-video {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-}
-.landing-video-outline {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .landing-video-frame { display: none; }
@@ -594,12 +586,9 @@ body::before {
       <div class="mt-1 text-gold-light text-xl">✦</div>
     </div>
 
-    <!-- Full-length looping animation, framed as a Mughal onion-dome silhouette above the envelope -->
+    <!-- Full-length looping animation, framed as a small capsule above the envelope -->
     <div class="landing-video-frame">
       <video class="landing-bg-video" id="landingBgVideo" src="envelope-bg.mp4" autoplay muted loop playsinline preload="auto"></video>
-      <svg class="landing-video-outline" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M20 55 C0 55 0 45 0 32 C0 12 30 0 50 0 C70 0 100 12 100 32 C100 45 100 55 80 55 L80 100 L20 100 Z" fill="none" stroke="#D4AF37" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
-      </svg>
     </div>
 
     <div class="envelope-wrap" id="envelopeWrap">
